@@ -1,26 +1,43 @@
-#include <Servo.h> 
+  // C++ code
+  //
+  #include <Servo.h>
 
-Servo servoRight;
+  int buttonUP = 0;
 
-const int buttonUP 2;
-const int buttonDown 3;
+  int buttonDOWN = 0;
 
-void setup(){
-  servoRight.attach(10);
-  pinMode(buttonUP, Input)
-  pinMode(buttonDown, Input)
-  servoRight.write(90)
+  int buttonSTOP = 0;
+  int speed;
+  int pos = 0;
+  Servo servo_10;
 
- 
-}
-
-void elevatorMotion() {
-  if(buttonUP == high) {
-    servoRight.write(180)
-  } else if(buttonDOWN == HIGH){
-    servoRight.readMicroseconds(0)
-  } else {
-    servoRight.write(90)
+  void setup()
+  {
+    pinMode(4, INPUT);
+    pinMode(3, INPUT);
+    pinMode(8, INPUT);
+    Serial.begin(9600);
+    servo_10.attach(10, 500, 2500);
+    pos = map(speed, -100,100, 0, 100);
+    servo_10.write(pos);
   }
 
-}
+  void loop()
+  {
+    buttonUP = digitalRead(4);
+    buttonDOWN = digitalRead(3);
+    buttonSTOP = digitalRead(8);
+    Serial.println(buttonUP);
+    Serial.println(buttonDOWN);
+    Serial.println(buttonSTOP);
+
+    if (buttonUP == 1) {
+      speed = 0;
+      servo_10.write(pos);
+    }
+    if (buttonDOWN == 1) {
+      speed = 180;
+      servo_10.write(pos);
+    }
+    delay(10); // Delay a little bit to improve simulation performance
+  }
